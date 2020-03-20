@@ -77,7 +77,7 @@ const MasterForm = props => {
                                 Dueño
                                 <input type="radio" name="owner" value={true} placeholder="DUEÑO" onChange={ e => handleChange(e)}/>
                                 <br></br>
-                                <label onClick={formState.owner == "true" ? () => nextStep(10): () => nextStep(4)}> Siguiente</label>
+                                <label onClick={formState.owner === "true" ? () => nextStep(10): () => nextStep(4)}> Siguiente</label>
                             </form>
                             </div>
                         </body>
