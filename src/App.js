@@ -1,25 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Switch, Route } from 'react-router-dom';
+import MasterForm from './components/form/MasterForm'
+import Home from './components/Home';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    //<MyContext.Provider>
+      <div className="App">
+      <Switch>
+              <Fragment>
+                <Route exact path='/hogar' render={() => <MasterForm/>}/>
+                <Route exact path='/' render={() => <Home/>}/>
+              </Fragment>
+            {/* <ProtectedRoute path='/projects/:id' component={ProjectDetails} />
+            <ProtectedRoute path='/projects' component={ProjectList} /> */}
+      </Switch>
+      </div>
+    //</MyContext.Provider>
   );
 }
 
