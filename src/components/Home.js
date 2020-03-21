@@ -13,7 +13,7 @@ const Home = props => {
             <h1>Olvida todo lo que sabes <br></br>de <u>seguros</u> y protegete hoy.</h1>
             </header>
             <body>
-                <Link to="/hogar" className="StartButton">Ve nuestros precios</Link>
+                <Link to="/hogar/1" className="StartButton">Ve nuestros precios</Link>
             </body>
           
         </div>

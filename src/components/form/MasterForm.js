@@ -17,6 +17,7 @@ const MasterForm = props => {
 
     const [ step, updateStep ] = useState({ numStep: 1})
 
+
     const handleChange = (event) => {  
         const { name, value } = event.target;
         updateFormState(Object.assign({}, formState, {[name]: value}))
