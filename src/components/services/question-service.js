@@ -9,6 +9,11 @@ class QuestionCRUD {
     this.service = service;
   }
 
+  getAll = () => {
+    return this.service.get('/questions')
+    .then(response => response.data.questions)
+  }
+
   getById = id => {
     return this.service.get(`/questions/${id}`)
     .then(response => response.data)
