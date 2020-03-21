@@ -31,6 +31,7 @@ const MasterForm = props => {
             case 1: 
                 return(
                     <div>
+                        <h3>Popcorn</h3>
                     <header className="App-header">
                         <h1>Hola! soy Priya. <br></br>Dejame ayudarte a conseguir <br></br> el mejor precio. <br></br>Empezamos?</h1>
                     </header>

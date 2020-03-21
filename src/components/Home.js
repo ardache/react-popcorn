@@ -7,11 +7,15 @@ const Home = props => {
     return (
         <div>
             <h3>Popcorn</h3>
+            
             <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
+            <img src={logo} className="App-logo" width= "50px" alt="logo" />
             <h1>Olvida todo lo que sabes <br></br>de <u>seguros</u> y protegete hoy.</h1>
-            <Link to="/hogar" className="StartButton">Ve nuestros precios</Link>
-          </header>
+            </header>
+            <body>
+                <Link to="/hogar" className="StartButton">Ve nuestros precios</Link>
+            </body>
+          
         </div>
     )
 }
