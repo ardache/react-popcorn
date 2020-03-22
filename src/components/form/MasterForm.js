@@ -3,9 +3,9 @@ import { Bounce } from 'react-reveal';
 import QuesCRUD from '../services/question-service';
 import {useParams} from 'react-router-dom';
 
-const MasterForm = props => {
+const MasterForm = (props) => {
 
-    const [question, setQuestion] = useState({description: ''})
+    
 
     const [ formState, updateFormState ] = useState({ 
         name: '',
@@ -25,8 +25,8 @@ const MasterForm = props => {
         updateFormState(Object.assign({}, formState, {[name]: value}))
       }
 
+    const [question, setQuestion] = useState({})
     const {id} = useParams()
-
     const getQuestion = () => {
         const formService = new QuesCRUD();
         formService.getById(id).then(res => setQuestion(res))
@@ -41,7 +41,7 @@ const MasterForm = props => {
             <h3>Popcorn</h3>
             <Bounce right>
             <header className="App-header">
-            <h1>{question.description}</h1>
+            <h1>{question.question}</h1>
             </header>
             </Bounce>
                 <body>
