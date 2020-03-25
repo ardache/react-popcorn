@@ -19,7 +19,7 @@ class AnswerCRUD {
     .then(response => response.data)
   }
 
-  createQuestion = questionBody => {
+  createQuestion = answerBody => {
     return this.service.post('/answer', answerBody)
     .then(response => response.data)
   }
