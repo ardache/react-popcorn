@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Bounce } from 'react-reveal';
 import QuesCRUD from '../services/question-service';
 import {useParams} from 'react-router-dom';
+import SingleText_input from '../inputs/SingleText-input'
 
-const MasterForm = (props) => {
-
-    
+const MasterForm = props => {
 
     const [ formState, updateFormState ] = useState({ 
         name: '',
@@ -25,8 +24,8 @@ const MasterForm = (props) => {
         updateFormState(Object.assign({}, formState, {[name]: value}))
       }
 
-    const [question, setQuestion] = useState({})
-    const {id} = useParams()
+    const [ question, setQuestion ] = useState({})
+    const { id } = useParams()
     const getQuestion = () => {
         const formService = new QuesCRUD();
         formService.getById(id).then(res => setQuestion(res))
@@ -36,26 +35,27 @@ const MasterForm = (props) => {
         getQuestion()
     }, [])
 
+    
     return (
         <div>
             <h3>Popcorn</h3>
             <Bounce right>
             <header className="App-header">
             <h1>{question.question}</h1>
+            <p>{question.kind}</p>
             </header>
             </Bounce>
                 <body>
-                    <div>
-                        <form>
-                            <input type="text" name="name" value={formState.name} placeholder="NOMBRE" onChange={e => handleChange(e)} />
-                            <input type="text" name="lastname" value={formState.lastname} placeholder="APELLIDO" onChange={e => handleChange(e)} />
-                            <br></br>
-                            <label> Vamos !!!</label>
-                        </form>
-                    </div>
-                </body>
+                    {question.kind === 'texto' 
+                        ? <SingleText_input/>
+                        : question.kind === 'doble texto'
+                        ? <p>Seré doble texto</p>
+                        : question.kind === 'opcion multiple'  
+                        ? <p>Seré un Check</p>
+                        : <p>Seré Opcion Multiple</p>
+                    }
+                </body>  
         </div>
-    
      )
 }
 
