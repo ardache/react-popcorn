@@ -3,7 +3,7 @@ import logo from '../logo.svg';
 import cursor from '../popcorn.svg';
 import { Link } from 'react-router-dom';
 import BranchCRUD from './services/branch-service';
-import { FaAccessibleIcon, FaBiohazard, FiHome, IoIosBicycle } from 'react-icons/fa';
+import { FaAccessibleIcon, FaBiohazard, FaHome, FaBicycle } from 'react-icons/fa';
 
 
 const Home = props => {
@@ -28,10 +28,28 @@ const Home = props => {
             <body>
                 {
                     branch.map(topic => {
-                    return (
+                        let logo = ""
+
+                       switch (topic.logo){
+                            case "FaBiohazard":
+                                logo = <FaBiohazard/>
+                                break;
+                            case "FaAccessibleIcon":
+                                logo = <FaAccessibleIcon/>
+                                break;
+                            case "FaHome":
+                                logo = <FaHome/>
+                                break;
+                            case "FaBicycle":
+                                logo = <FaBicycle/>
+                                break;
+                       }
+                    
+                        return (
                 
                         <Link to={`/hogar/1/${topic.next_question}`} className="StartButton" >
-                          <FaBiohazard/>  {topic.name}<br></br>
+                          {logo}
+                          {topic.name}<br></br>
                         </Link>
                     )})
                 }
