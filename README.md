@@ -56,7 +56,7 @@ asegurar aquello que más valoran, y lo mejor de todo, a pagos mensuales.
 - - -
 
 ~~~
-Ardash Hernandez
+Ardash Hernández
 Ironhacker G20
 
 Ironhack México City
