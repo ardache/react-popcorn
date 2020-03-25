@@ -4,6 +4,7 @@
 - - -
 
 ## Para Empezar
+Ingresa [aqui](https://smartpopcorn.herokuapp.com) para iniciar el demo
 
 - - -
 
