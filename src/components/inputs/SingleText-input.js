@@ -31,8 +31,8 @@ useEffect(() => {
     return (
         <div>
             <form className={classes.root} noValidate autoComplete="off">
-                <TextField id="outlined-basic" label={answer.long_answer} variant="outlined" /><br></br>
-                <Button href={`/hogar/1/${answer.next_question}`} variant="contained" color="secondary">
+                <TextField id="outlined-basic" name={answer.short_answer} label={answer.long_answer} variant="outlined" onChange={props.onChange}/><br></br>
+                <Button href={`/hogar/${answer.next_question}`} variant="contained" color="secondary">
                 Siguiente
                 </Button>
             </form>

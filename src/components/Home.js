@@ -47,7 +47,7 @@ const Home = props => {
                     
                         return (
                 
-                        <Link to={`/hogar/1/${topic.next_question}`} className="StartButton" >
+                        <Link to={`/hogar/${topic.next_question}`} className="StartButton" >
                           {logo}
                           {topic.name}<br></br>
                         </Link>

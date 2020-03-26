@@ -12,10 +12,10 @@ function App() {
       <Switch>
               <Fragment >
                 <Route exact path='/' render={() => <Home/>}/>
-                <Route exact path='/hogar/1/:id' render={() => <MasterForm branch={"home"} q={1}/>}/>
-                <Route exact path='/pets/1' render={() => <MasterForm branch={"pets"} q={1}/>}/>
-                <Route exact path='/bike/1' render={() => <MasterForm branch={"bike"} q={1}/>}/>
-                <Route exact path='/geek/1' render={() => <MasterForm branch={"geek"} q={1}/>}/>
+                <Route exact path='/hogar/:id' render={() => <MasterForm branch={"home"} q={1}/>}/>
+                <Route exact path='/pets/' render={() => <MasterForm branch={"pets"} q={1}/>}/>
+                <Route exact path='/bike/' render={() => <MasterForm branch={"bike"} q={1}/>}/>
+                <Route exact path='/geek/' render={() => <MasterForm branch={"geek"} q={1}/>}/>
               </Fragment>
             {/* <ProtectedRoute path='/projects/:id' component={ProjectDetails} />
             <ProtectedRoute path='/projects' component={ProjectList} /> */}

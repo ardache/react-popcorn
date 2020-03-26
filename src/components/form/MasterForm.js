@@ -42,12 +42,11 @@ const MasterForm = props => {
             <Bounce right>
             <header className="App-header">
             <h1>{question.question}</h1>
-    <p>{question.answers}</p>
             </header>
             </Bounce>
                 <body>
                     {question.kind === 'texto' 
-                        ? <SingleText_input answId={question.answers}/>
+                        ? <SingleText_input answId={question.answers} onChange={ e => handleChange(e)}/>
                         : question.kind === 'doble texto'
                         ? <p>Seré doble texto</p>
                         : question.kind === 'opcion multiple'  
