@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Bounce } from 'react-reveal';
 import QuesCRUD from '../services/question-service';
-import AnswCRUD from '../services/answer-service';
 import {useParams} from 'react-router-dom';
 import SingleText_input from '../inputs/SingleText-input'
 
@@ -36,20 +35,6 @@ const MasterForm = props => {
         getQuestion()
     }, [])
 
-    const [ answer, setAnswer ] = useState({})
-    const  idAnsw  = question.answers;
-    console.log(idAnsw)
-    const getAnswer = () => {
-        const formAnswService = new AnswCRUD();
-        formAnswService.getById(idAnsw.map(id => { 
-            return (id)
-        })).then(res => setAnswer(res))
-    }
-
-    useEffect(() => {
-        getAnswer()
-    }, [])
-
     
     return (
         <div>
@@ -62,7 +47,7 @@ const MasterForm = props => {
             </Bounce>
                 <body>
                     {question.kind === 'texto' 
-                        ? <SingleText_input label={answer.long_answer} nq={answer._id}/>
+                        ? <SingleText_input answId={question.answers}/>
                         : question.kind === 'doble texto'
                         ? <p>Seré doble texto</p>
                         : question.kind === 'opcion multiple'  

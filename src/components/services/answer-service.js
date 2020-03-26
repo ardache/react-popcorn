@@ -14,9 +14,10 @@ class AnswerCRUD {
     .then(response => response.data.answers)
   }
 
-  getById = id => {
-    return this.service.get(`/answer/${id}`)
+  getById = num => {
+    return this.service.get(`/answer/${num}`)
     .then(response => response.data)
+    .then(console.log(num))
   }
 
   createQuestion = answerBody => {
