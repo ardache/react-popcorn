@@ -1,7 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import {TextField, Button} from '@material-ui/core';
 import AnswCRUD from '../services/answer-service';
+import MyContext from '../../context'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -14,30 +16,26 @@ const useStyles = makeStyles(theme => ({
 
 const SingleText_input = props => {
     const classes = useStyles();
+    const { status } = useContext(MyContext); //es para saber si se debe o no habilitar el boton de siguiente, solo una seleccion haya sido elegida
 
+    const [answer, setAnswer] = useState({})
+    const getAnswer = () => {
+      const formAnswService = new AnswCRUD();
+      formAnswService.getById(props.answId).then(res => setAnswer(res))
+    }
 
-const [answer, setAnswer] = useState({})
+    useEffect(() => {
+      getAnswer()
+    }, [props.answId])
 
-const getAnswer = () => {
-  const formAnswService = new AnswCRUD();
-  formAnswService.getById(props.answId).then(res => setAnswer(res))
-}
-
-useEffect(() => {
-  getAnswer()
-}, [])
-
-
-    return (
-        <div>
-            <form className={classes.root} noValidate autoComplete="off">
-                <TextField id="outlined-basic" name={answer.short_answer} label={answer.long_answer} variant="outlined" onChange={props.onChange}/><br></br>
-                <Button href={`/hogar/${answer.next_question}`} variant="contained" color="secondary">
-                Siguiente
-                </Button>
-            </form>
-        </div>
-    )
-}
+        return (
+            
+                <div className={classes.root} noValidate autoComplete="off">
+                    <TextField id="outlined-basic" name={answer.short_answer} label={answer.long_answer} variant="outlined" onChange={props.onChange}/><br></br>
+                    <Button  variant="contained" color="secondary" disabled={status}><Link to={`/hogar/${answer.next_question}`}> Siguiente</Link></Button>
+                </div>
+            
+        )
+    }
 
 export default SingleText_input

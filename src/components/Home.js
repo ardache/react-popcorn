@@ -43,6 +43,8 @@ const Home = props => {
                             case "FaBicycle":
                                 logo = <FaBicycle/>
                                 break;
+                            default:
+                                break;
                        }
                     
                         return (

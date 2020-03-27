@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment} from 'react';
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import MasterForm from './components/form/MasterForm'
@@ -10,7 +10,7 @@ function App() {
     //<MyContext.Provider>
       <div className="App">
       <Switch>
-              <Fragment >
+              <Fragment>
                 <Route exact path='/' render={() => <Home/>}/>
                 <Route exact path='/hogar/:id' render={() => <MasterForm branch={"home"} q={1}/>}/>
                 <Route exact path='/pets/' render={() => <MasterForm branch={"pets"} q={1}/>}/>

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import { Bounce } from 'react-reveal';
+import React, { useState, useEffect, useContext, Fragment} from 'react'
 import QuesCRUD from '../services/question-service';
 import {useParams} from 'react-router-dom';
 import SingleText_input from '../inputs/SingleText-input'
+import { Bounce } from 'react-reveal';
+import MyContext from '../../context'
 
 const MasterForm = props => {
 
@@ -18,10 +19,13 @@ const MasterForm = props => {
         switchInsurance:'',
         otherMotivation:''
     })
+    
+    const { status_input, updateStatus } = useContext(MyContext);
 
     const handleChange = (event) => {  
         const { name, value } = event.target;
-        updateFormState(Object.assign({}, formState, {[name]: value}))
+        updateFormState(Object.assign({}, formState, {[name]: value}))  
+        updateStatus({status_input: 'true'})
       }
 
     const [ question, setQuestion ] = useState({})
@@ -29,32 +33,39 @@ const MasterForm = props => {
     const getQuestion = () => {
         const formService = new QuesCRUD();
         formService.getById(id).then(res => setQuestion(res))
+        
     }
     
     useEffect(() => {
         getQuestion()
-    }, [])
+    }, [id])
+
 
     
     return (
-        <div>
-            <h3>Popcorn</h3>
-            <Bounce right>
-            <header className="App-header">
-            <h1>{question.question}</h1>
-            </header>
-            </Bounce>
-                <body>
-                    {question.kind === 'texto' 
-                        ? <SingleText_input answId={question.answers} onChange={ e => handleChange(e)}/>
-                        : question.kind === 'doble texto'
-                        ? <p>Seré doble texto</p>
-                        : question.kind === 'opcion multiple'  
-                        ? <p>Seré un Check</p>
-                        : <p>Seré Opcion Multiple</p>
-                    }
-                </body>  
-        </div>
+        <MyContext.Provider value={{status: formState.status, updateContext: updateFormState}}>
+        
+                <h3>Popcorn</h3>
+                    <Bounce right>
+                            <header className="App-header">
+                                <h1>{question.question}</h1>
+                            </header>
+                  
+                        <Fragment>
+                        {question.kind === 'texto' 
+                            ? <SingleText_input answId={question.answers} status={status_input} onChange={ e => handleChange(e)}/>
+                            : question.kind === 'doble texto'
+                            ? <p>Seré doble texto</p>
+                            : question.kind === 'opcion multiple'  
+                            ? <p>Seré un Check</p>
+                            : <p>Seré Opcion Multiple</p>
+                        }
+                        </Fragment>
+                    
+                    </Bounce>
+            
+        
+        </MyContext.Provider>
      )
 }
 
