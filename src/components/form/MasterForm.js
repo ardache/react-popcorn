@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, Fragment} from 'react'
 import QuesCRUD from '../services/question-service';
 import {useParams} from 'react-router-dom';
 import SingleText_input from '../inputs/SingleText-input'
+import Check_input from '../inputs/Check-input'
 import { Bounce } from 'react-reveal';
 import MyContext from '../../context'
 
@@ -11,7 +12,7 @@ const MasterForm = props => {
         name: '',
         lastname: '',
         address: '',
-        owner:false,
+        owner:'',
         roomie:'',
         fire:'',
         theft:'',
@@ -33,7 +34,6 @@ const MasterForm = props => {
     const getQuestion = () => {
         const formService = new QuesCRUD();
         formService.getById(id).then(res => setQuestion(res))
-        
     }
     
     useEffect(() => {
@@ -53,11 +53,11 @@ const MasterForm = props => {
                   
                         <Fragment>
                         {question.kind === 'texto' 
-                            ? <SingleText_input answId={question.answers} status={status_input} onChange={ e => handleChange(e)}/>
+                            ? <SingleText_input answId={question._id} state={formState} status={status_input} onChange={ e => handleChange(e)}/>
                             : question.kind === 'doble texto'
                             ? <p>Seré doble texto</p>
                             : question.kind === 'opcion multiple'  
-                            ? <p>Seré un Check</p>
+                            ? <Check_input answId={question._id} state={formState} status={status_input} onChange={ e => handleChange(e)}/>
                             : <p>Seré Opcion Multiple</p>
                         }
                         </Fragment>

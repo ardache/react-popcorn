@@ -9,15 +9,14 @@ class AnswerCRUD {
     this.service = service;
   }
 
-  getAll = () => {
-    return this.service.get('/answer')
-    .then(response => response.data.answers)
-  }
+  // getAll = () => {
+  //   return this.service.get(`/answer/`)
+  //   .then(response => response.data.answers)
+  // }
 
-  getById = num => {
-    return this.service.get(`/answer/${num}`)
-    .then(response => response.data)
-    .then(console.log(num))
+  getById = id => {
+    return this.service.get(`/answer/${id}`)
+    .then(response => response.data.answers)
   }
 
   createQuestion = answerBody => {
