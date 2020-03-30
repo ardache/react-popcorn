@@ -42,7 +42,7 @@ const SingleText_input = props => {
                 )
               })
             }
-
+          
           </div>
                 
                 
