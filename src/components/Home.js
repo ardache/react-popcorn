@@ -25,23 +25,23 @@ const Home = props => {
             <img src={cursor} className="App-logo" width= "100px" alt="logo" />
             <h1>Olvida todo lo que sabes <br></br>de <u>seguros</u> y protegete hoy.</h1>
             </header>
-            <body>
+            <div>
                 {
-                    branch.map(topic => {
+                    branch.map((topic,i) => {
                         let logo = ""
 
                        switch (topic.logo){
                             case "FaBiohazard":
-                                logo = <FaBiohazard/>
+                                logo = <FaBiohazard />
                                 break;
                             case "FaAccessibleIcon":
-                                logo = <FaAccessibleIcon/>
+                                logo = <FaAccessibleIcon />
                                 break;
                             case "FaHome":
-                                logo = <FaHome/>
+                                logo = <FaHome />
                                 break;
                             case "FaBicycle":
-                                logo = <FaBicycle/>
+                                logo = <FaBicycle />
                                 break;
                             default:
                                 break;
@@ -49,13 +49,13 @@ const Home = props => {
                     
                         return (
                 
-                        <Link to={`/hogar/${topic.next_question}`} className="StartButton" >
+                        <Link to={`/hogar/${topic.next_question}`} key={i} className="StartButton" >
                           {logo}
                           {topic.name}<br></br>
                         </Link>
                     )})
                 }
-            </body>
+            </div>
           
         </div>
     )

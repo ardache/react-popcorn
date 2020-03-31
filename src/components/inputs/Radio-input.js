@@ -26,7 +26,7 @@ const Radio_input = props => {
 
     useEffect(() => {
       getAnswer()
-    }, [props.answId])
+    }, [])
 
     return (
         <Bounce right>
