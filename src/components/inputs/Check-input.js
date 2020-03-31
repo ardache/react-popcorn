@@ -4,6 +4,7 @@ import { Checkbox, Button, FormControlLabel, FormGroup, FormControl } from '@mat
 import AnswCRUD from '../services/answer-service';
 //import MyContext from '../../context'
 import { Link } from 'react-router-dom'
+import { Bounce } from 'react-reveal';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,31 +30,31 @@ const Chack_input = props => {
     }, [props.answId])
 
     return (
-        <div>
+        <Bounce right>
             <div className={classes.root} noValidate autoComplete="off">
-                <FormControl component="fieldset">
-                    <FormGroup aria-label="position" column>
-                        {
-                            answer.map(item => {
-                                return (
+
+                {
+                    answer.map(item => {
+                        return (
+                            <FormControl component="fieldset">
+                                <FormGroup aria-label="position">
                                     <FormControlLabel
-                                        control={<Checkbox name={item.short_answer} color="primary" value={item.short_answer} onChange={props.onChange}/>}
+                                        control={<Checkbox name={item.short_answer} color="primary" value={item.short_answer} onChange={props.onChange} />}
                                         label={item.long_answer}
                                         labelPlacement="top"
                                     />
-                                )
-                            })
-                        }
-                    </FormGroup>
-                </FormControl>
+                                </FormGroup>
+                            </FormControl>
+                        )
+                    })
+                }
+
             </div>
-
-
 
             <FormControlLabel
                 control={<Button variant="contained" color="secondary" disabled={!props.state[answer.short_answer]}><Link to={`/hogar/${answer.next_question}`}> Siguiente</Link></Button>}
             />
-        </div>
+        </Bounce>
 
     )
     }

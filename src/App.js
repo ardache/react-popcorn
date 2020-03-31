@@ -16,7 +16,7 @@ function App() {
                 <Route exact path='/pets/' render={() => <MasterForm branch={"pets"} q={1}/>}/>
                 <Route exact path='/bike/' render={() => <MasterForm branch={"bike"} q={1}/>}/>
                 <Route exact path='/geek/' render={() => <MasterForm branch={"geek"} q={1}/>}/>
-              </Fragment>
+                </Fragment>
             {/* <ProtectedRoute path='/projects/:id' component={ProjectDetails} />
             <ProtectedRoute path='/projects' component={ProjectList} /> */}
       </Switch>

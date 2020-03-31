@@ -7,7 +7,7 @@ import Check_input from '../inputs/Check-input'
 import Radio_input from '../inputs/Radio-input'
 
 import { Bounce } from 'react-reveal';
-import MyContext from '../../context'
+//import MyContext from '../../context'
 
 const MasterForm = props => {
 
@@ -32,8 +32,9 @@ const MasterForm = props => {
         updateFormState(Object.assign({}, formState, {[name]: value}))  
       }
 
-    const handleSelection = (data) => {  
-        console.log(data)
+    const [ nextQuestion, setNextQuestion ] = useState({ nextQuestion : ''})  
+    const handleSelection = data => {  
+        setNextQuestion(Object.assign({}, nextQuestion, {nextQuestion: data}))
     }
     
     
@@ -51,29 +52,24 @@ const MasterForm = props => {
 
     
     return (
-        <MyContext.Provider value={{status: formState.status, updateContext: updateFormState}}>
-        
+        //<MyContext.Provider value={{status: formState.status, updateContext: updateFormState}}>
+            <Fragment>
                 <h3>Popcorn</h3>
-                    <Bounce right>
+                        <Bounce right>
                             <header className="App-header">
                                 <h1>{question.question}</h1>
                             </header>
-                  
-                        <Fragment>
                         {question.kind === 'texto' 
                             ? <SingleText_input answId={question._id} state={formState} onChange={ e => handleChange(e)}/>
                             : question.kind === 'doble texto'
                             ? <p>Seré doble texto</p>
                             : question.kind === 'opcion multiple'  
-                            ? <Radio_input answId={question._id} state={formState} onChange={ e => handleChange(e)} selection={handleSelection}/>
+                            ? <Radio_input answId={question._id} state={formState} next={nextQuestion} onChange={ e => handleChange(e)} selection={handleSelection}/>
                             : <Check_input answId={question._id} state={formState} onChange={ e => handleChange(e)}/>
                         }
-                        </Fragment>
-                    
-                    </Bounce>
-            
-        
-        </MyContext.Provider>
+                        </Bounce>
+            </Fragment>
+        //</MyContext.Provider>
      )
 }
 

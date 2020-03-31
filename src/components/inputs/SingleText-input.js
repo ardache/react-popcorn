@@ -5,6 +5,7 @@ import AnswCRUD from '../services/answer-service';
 //import MyContext from '../../context'
 import { Link } from 'react-router-dom'
 
+
 const useStyles = makeStyles(theme => ({
   root: {
     '& > *': {
@@ -32,10 +33,10 @@ const SingleText_input = props => {
         return (
           <div>
             {
-              answer.map(item => {
+              answer.map((item,i) => {
                 return (
 
-                  <div className={classes.root} noValidate autoComplete="off">
+                  <div key={i} className={classes.root} noValidate autoComplete="off">
                     <TextField id="outlined-basic" value={props.state[item.short_answer]} name={item.short_answer} label={item.long_answer} variant="outlined" color="secondary" onChange={props.onChange} /><br></br>
                     <Button variant="contained" color="secondary" disabled={!props.state[item.short_answer]}><Link to={`/hogar/${item.next_question}`}> Siguiente</Link></Button>
                   </div>
