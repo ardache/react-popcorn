@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react'
-import logo from '../logo.svg';
+//import logo from '../logo.svg';
 import cursor from '../popcorn.svg';
 import { Link } from 'react-router-dom';
 import BranchCRUD from './services/branch-service';
 import { FaAccessibleIcon, FaBiohazard, FaHome, FaBicycle } from 'react-icons/fa';
 
 
+
 const Home = props => {
 
     const [ branch, setBranch ] = useState([])
-    const branchService = new BranchCRUD();
+    
     const getAllBranch = () => {
+        const branchService = new BranchCRUD();
         branchService.getAll().then(res=>setBranch(res));
     }
+
     useEffect(() => {
         getAllBranch()
     }, [])

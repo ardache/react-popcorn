@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useEffect} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import {TextField, Button} from '@material-ui/core';
 import AnswCRUD from '../services/answer-service';
@@ -14,18 +14,21 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SingleText_input = props => {
+const SingleTextInput = props => {
     const classes = useStyles();
     //const { status } = useContext(MyContext); //es para saber si se debe o no habilitar el boton de siguiente, solo una seleccion haya sido elegida
 
     const [ answer, setAnswer ] = useState([])
-    const formAnswService = new AnswCRUD();
-    const getAnswer = () => {
-      formAnswService.getById(props.answId).then(res=>setAnswer(res));
     
-    }
+    
 
     useEffect(() => {
+      const getAnswer = () => {
+        const formAnswService = new AnswCRUD();
+        formAnswService.getById(props.answId).then(res=>setAnswer(res));
+      
+      }
+      
       getAnswer()
     }, [props.answId])
 
@@ -50,4 +53,4 @@ const SingleText_input = props => {
         )
     }
 
-export default SingleText_input
+export default SingleTextInput

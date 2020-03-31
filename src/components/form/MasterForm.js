@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext, Fragment} from 'react'
+import React, { useState, useEffect, Fragment} from 'react'
 import QuesCRUD from '../services/question-service';
 import {useParams} from 'react-router-dom';
 
-import SingleText_input from '../inputs/SingleText-input'
-import Check_input from '../inputs/Check-input'
-import Radio_input from '../inputs/Radio-input'
+import SingleTextInput from '../inputs/SingleText-input'
+import CheckInput from '../inputs/Check-input'
+import RadioInput from '../inputs/Radio-input'
 
 import { Bounce } from 'react-reveal';
 //import MyContext from '../../context'
@@ -40,12 +40,13 @@ const MasterForm = props => {
     
     const [ question, setQuestion ] = useState({})
     const { id } = useParams()
-    const getQuestion = () => {
-        const formService = new QuesCRUD();
-        formService.getById(id).then(res => setQuestion(res))
-    }
+    
     
     useEffect(() => {
+        const getQuestion = () => {
+            const formService = new QuesCRUD();
+            formService.getById(id).then(res => setQuestion(res))
+        }
         getQuestion()
     }, [id])
 
@@ -60,12 +61,12 @@ const MasterForm = props => {
                                 <h1>{question.question}</h1>
                             </header>
                         {question.kind === 'texto' 
-                            ? <SingleText_input answId={question._id} state={formState} onChange={ e => handleChange(e)}/>
+                            ? <SingleTextInput answId={question._id} state={formState} onChange={ e => handleChange(e)}/>
                             : question.kind === 'doble texto'
                             ? <p>Seré doble texto</p>
                             : question.kind === 'opcion multiple'  
-                            ? <Radio_input answId={question._id} state={formState} next={nextQuestion} onChange={ e => handleChange(e)} selection={handleSelection}/>
-                            : <Check_input answId={question._id} state={formState} onChange={ e => handleChange(e)}/>
+                            ? <RadioInput answId={question._id} state={formState} next={nextQuestion} onChange={ e => handleChange(e)} selection={handleSelection}/>
+                            : <CheckInput answId={question._id} state={formState} onChange={ e => handleChange(e)}/>
                         }
                         </Bounce>
             </Fragment>

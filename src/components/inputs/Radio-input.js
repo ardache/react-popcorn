@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Fragment} from 'react'
+import React, {useState, useEffect} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { Radio, Button, FormControlLabel, RadioGroup, FormControl } from '@material-ui/core';
 import AnswCRUD from '../services/answer-service';
@@ -14,19 +14,22 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Radio_input = props => {
+const RadioInput = props => {
     const classes = useStyles();
     
     const [answer, setAnswer] = useState([])
     let field = ""
-    const formAnswService = new AnswCRUD();
-    const getAnswer = () => {
-      formAnswService.getById(props.answId).then(res => setAnswer(res))
-    }
+    
+    
 
     useEffect(() => {
+        const getAnswer = () => {
+            const formAnswService = new AnswCRUD();
+            formAnswService.getById(props.answId).then(res => setAnswer(res))
+          }
+
       getAnswer()
-    }, [])
+    }, [props.answId]) //verificar si no afecta este propr aqui
 
     return (
         <Bounce right>
@@ -62,4 +65,4 @@ const Radio_input = props => {
     )
     }
 
-export default Radio_input
+export default RadioInput

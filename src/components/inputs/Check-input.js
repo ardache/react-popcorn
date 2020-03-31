@@ -15,17 +15,20 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Chack_input = props => {
+const CheckInput = props => {
     const classes = useStyles();
     //const { status } = useContext(MyContext); //es para saber si se debe o no habilitar el boton de siguiente, solo una seleccion haya sido elegida
     
     const [answer, setAnswer] = useState([])
-    const formAnswService = new AnswCRUD();
-    const getAnswer = () => {
-      formAnswService.getById(props.answId).then(res => setAnswer(res))
-    }
+    
+    
 
     useEffect(() => {
+        const getAnswer = () => {
+            const formAnswService = new AnswCRUD();
+            formAnswService.getById(props.answId).then(res => setAnswer(res))
+          }
+          
       getAnswer()
     }, [props.answId])
 
@@ -59,4 +62,4 @@ const Chack_input = props => {
     )
     }
 
-export default Chack_input
+export default CheckInput
