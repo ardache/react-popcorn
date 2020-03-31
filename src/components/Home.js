@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 //import logo from '../logo.svg';
-import cursor from '../popcorn.svg';
+import cursor from '../popcornbox.png';
 import { Link } from 'react-router-dom';
 import BranchCRUD from './services/branch-service';
 import { FaAccessibleIcon, FaBiohazard, FaHome, FaBicycle } from 'react-icons/fa';
@@ -25,7 +25,7 @@ const Home = props => {
             <h3>Popcorn</h3>
             
             <header className="App-header">
-            <img src={cursor} className="App-logo" width= "100px" alt="logo" />
+            <img src={cursor} className="App-logo" width= "50px" height="50px" alt="logo" />
             <h1>Olvida todo lo que sabes <br></br>de <u>seguros</u> y protegete hoy.</h1>
             </header>
             <div>

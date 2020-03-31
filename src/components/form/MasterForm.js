@@ -50,8 +50,6 @@ const MasterForm = props => {
         getQuestion()
     }, [id])
 
-
-    
     return (
         //<MyContext.Provider value={{status: formState.status, updateContext: updateFormState}}>
             <Fragment>
