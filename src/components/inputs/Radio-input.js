@@ -20,12 +20,11 @@ const RadioInput = props => {
     const [answer, setAnswer] = useState([])
     let field = ""
     
-    
-
     useEffect(() => {
         const getAnswer = () => {
             const formAnswService = new AnswCRUD();
             formAnswService.getById(props.answId).then(res => setAnswer(res))
+            console.log('saludos desde Radio-input')
           }
 
       getAnswer()

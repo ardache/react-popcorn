@@ -21,21 +21,20 @@ const CheckInput = props => {
     
     const [answer, setAnswer] = useState([])
     
-    
 
     useEffect(() => {
         const getAnswer = () => {
             const formAnswService = new AnswCRUD();
             formAnswService.getById(props.answId).then(res => setAnswer(res))
+            console.log('saludos desde Check-input')
           }
-          
+
       getAnswer()
     }, [props.answId])
 
     return (
         <Bounce right>
             <div className={classes.root} noValidate autoComplete="off">
-
                 {
                     answer.map(item => {
                         return (
@@ -51,15 +50,12 @@ const CheckInput = props => {
                         )
                     })
                 }
-
             </div>
-
             <FormControlLabel
                 control={<Button variant="contained" color="secondary" disabled={!props.state[answer.short_answer]}><Link to={`/hogar/${answer.next_question}`}> Siguiente</Link></Button>}
             />
         </Bounce>
-
     )
-    }
+}
 
 export default CheckInput

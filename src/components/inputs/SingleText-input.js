@@ -26,9 +26,9 @@ const SingleTextInput = props => {
       const getAnswer = () => {
         const formAnswService = new AnswCRUD();
         formAnswService.getById(props.answId).then(res=>setAnswer(res));
-      
+        console.log('saludos desde Single-text')
       }
-      
+
       getAnswer()
     }, [props.answId])
 

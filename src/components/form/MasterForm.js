@@ -66,7 +66,9 @@ const MasterForm = props => {
                             ? <p>Seré doble texto</p>
                             : question.kind === 'opcion multiple'  
                             ? <RadioInput answId={question._id} state={formState} next={nextQuestion} onChange={ e => handleChange(e)} selection={handleSelection}/>
-                            : <CheckInput answId={question._id} state={formState} onChange={ e => handleChange(e)}/>
+                            : question.kind === 'checklist'  
+                            ? <CheckInput answId={question._id} state={formState} onChange={ e => handleChange(e)}/>
+                            : <div></div>
                         }
                         </Bounce>
             </Fragment>
