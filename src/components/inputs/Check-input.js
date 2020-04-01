@@ -20,13 +20,13 @@ const CheckInput = props => {
     //const { status } = useContext(MyContext); //es para saber si se debe o no habilitar el boton de siguiente, solo una seleccion haya sido elegida
     
     const [answer, setAnswer] = useState([])
+    let field = ""
     
 
     useEffect(() => {
         const getAnswer = () => {
             const formAnswService = new AnswCRUD();
             formAnswService.getById(props.answId).then(res => setAnswer(res))
-            console.log('saludos desde Check-input')
           }
 
       getAnswer()
@@ -36,12 +36,13 @@ const CheckInput = props => {
         <Bounce right>
             <div className={classes.root} noValidate autoComplete="off">
                 {
-                    answer.map(item => {
+                    answer.map((item,i) => {
+                        field= item.short_answer;
                         return (
-                            <FormControl component="fieldset">
+                            <FormControl key={i} component="fieldset">
                                 <FormGroup aria-label="position">
                                     <FormControlLabel
-                                        control={<Checkbox name={item.short_answer} color="primary" value={item.short_answer} onChange={props.onChange} />}
+                                        control={<Checkbox name={item.short_answer} color="primary" value={item.short_answer} onChange={props.onChange} onClick={() => props.selection(item.next_question)}/>}
                                         label={item.long_answer}
                                         labelPlacement="top"
                                     />
@@ -52,7 +53,7 @@ const CheckInput = props => {
                 }
             </div>
             <FormControlLabel
-                control={<Button variant="contained" color="secondary" disabled={!props.state[answer.short_answer]}><Link to={`/hogar/${answer.next_question}`}> Siguiente</Link></Button>}
+                control={<Button variant="contained" color="secondary" disabled={!props.state[field]}><Link to={`/hogar/${props.next['nextQuestion']}`}> Siguiente</Link></Button>}
             />
         </Bounce>
     )
