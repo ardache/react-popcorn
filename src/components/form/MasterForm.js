@@ -16,31 +16,46 @@ const MasterForm = props => {
         lastname: '',
         address: '',
         owner:'',
-        roomie:'',
-        fire:'',
-        theft:'',
+        adds:'',
         newAdquisicion:'',
         switchInsurance:'',
         otherMotivation:'',
-        next_question:''
+        next_question:'',
+        points:0
     })
-  
-    //const { status_input, updateStatus } = useContext(MyContext);
 
     const handleChange = (event) => {  
         const { name, value } = event.target;
-        updateFormState(Object.assign({}, formState, {[name]: value}))  
+        
+        updateFormState(Object.assign({}, formState, {[name]: value}))
+        //setNextQuestion({})
       }
 
-    const [ nextQuestion, setNextQuestion ] = useState({ nextQuestion : ''})  
-    const handleSelection = data => {  
-        setNextQuestion(Object.assign({}, nextQuestion, {nextQuestion: data}))
+    const handleCheck = (data) => {  
+      const newPoints = nextQuestion.qPoints
+      const value = nextQuestion.dataAnswer
+      console.log(data, value )
+      updateFormState(Object.assign({}, formState, {[data]: value, points: formState.points + newPoints}))
+      setNextQuestion({})
     }
-    
-    
+
+
+    const [ nextQuestion, setNextQuestion ] = useState({ 
+        nextQuestion : '',
+        dataAnswer:'',
+        qPoints:0
+    })  
+    const handleSelection = (data, selAnswer, datapoints) => {   //
+        setNextQuestion(Object.assign({}, nextQuestion, {
+            nextQuestion: data,
+            dataAnswer: nextQuestion.dataAnswer + selAnswer, 
+            qPoints: nextQuestion.qPoints + datapoints
+        })) //
+    }
+
+      
     const [ question, setQuestion ] = useState({})
     const { id } = useParams()
-    
     
     useEffect(() => {
         const getQuestion = () => {
@@ -63,9 +78,9 @@ const MasterForm = props => {
                             : question.kind === 'doble texto'
                             ? <p>Seré doble texto</p>
                             : question.kind === 'opcion multiple'  
-                            ? <RadioInput answId={question._id} state={formState} next={nextQuestion} onChange={ e => handleChange(e)} selection={handleSelection}/>
+                            ? <RadioInput answId={question._id} state={formState} next={nextQuestion} onChange={ e => handleChange(e)} selection={handleSelection} onClick={handleCheck}/>
                             : question.kind === 'checklist'  
-                            ? <CheckInput answId={question._id} state={formState} next={nextQuestion}onChange={ e => handleChange(e)} selection={handleSelection}/>
+                            ? <CheckInput answId={question._id} state={formState} next={nextQuestion} onClick={handleCheck} selection={handleSelection}/>
                             : <div></div> 
                         }
                         </Bounce>

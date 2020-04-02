@@ -41,7 +41,13 @@ const RadioInput = props => {
                                 <RadioGroup aria-label="position" 
                                 name={item.short_answer} 
                                 value={props.state[item.short_answer]} 
-                                onChange={props.onChange} onClick={() => props.selection(item.next_question)}>
+                                //onChange={props.onChange} 
+                                onClick={() => props.selection(
+                                    item.next_question,
+                                    item.long_answer,
+                                    item.points
+                                    )}
+                                >
                                     <FormControlLabel
                                         control={<Radio/>}                                      
                                         label={item.long_answer}
@@ -56,9 +62,17 @@ const RadioInput = props => {
                 }
             
             </div>
-                    <FormControlLabel 
-                    control={<Button variant="contained" color="secondary" disabled={!props.state[field]}><Link to={`/hogar/${props.next['nextQuestion']}`}> Siguiente</Link></Button>}
-                    />
+            <FormControlLabel
+                control={
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        disabled={!props.next['dataAnswer']}
+                        onClick={() => props.onClick(field)}
+                    >
+                        <Link to={`/hogar/${props.next['nextQuestion']}`}> Siguiente</Link>
+                    </Button>}
+            />
         </Bounce>
     )
     }

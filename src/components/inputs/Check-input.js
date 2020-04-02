@@ -42,7 +42,18 @@ const CheckInput = props => {
                             <FormControl key={i} component="fieldset">
                                 <FormGroup aria-label="position">
                                     <FormControlLabel
-                                        control={<Checkbox name={item.short_answer} color="primary" value={item.short_answer} onChange={props.onChange} onClick={() => props.selection(item.next_question)}/>}
+                                        control=
+                                        {<Checkbox
+                                            name={item.short_answer}
+                                            color="primary"
+                                            value={item.short_answer}
+                                            //onChange={props.onChange}
+                                            onClick={() => props.selection(
+                                                    item.next_question,
+                                                    item.long_answer,
+                                                    item.points
+                                                    )}
+                                        />}
                                         label={item.long_answer}
                                         labelPlacement="top"
                                     />
@@ -53,7 +64,16 @@ const CheckInput = props => {
                 }
             </div>
             <FormControlLabel
-                control={<Button variant="contained" color="secondary" disabled={!props.state[field]}><Link to={`/hogar/${props.next['nextQuestion']}`}> Siguiente</Link></Button>}
+                control={
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        disabled={!props.next['dataAnswer']}
+                        onClick={() => props.onClick(field)}
+                    >
+                            <Link to={`/hogar/${props.next['nextQuestion']}`}> Siguiente</Link>
+                    </Button>
+                }
             />
         </Bounce>
     )
