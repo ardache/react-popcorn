@@ -23,10 +23,8 @@ const MasterForm = props => {
         next_question:'',
         points:0
     })
-
     const handleChange = (event) => {  
         const { name, value } = event.target;
-        
         updateFormState(Object.assign({}, formState, {[name]: value}))
         //setNextQuestion({})
       }
@@ -45,11 +43,20 @@ const MasterForm = props => {
         dataAnswer:'',
         qPoints:0
     })  
-    const handleSelection = (data, selAnswer, datapoints) => {   //
+    const handleCheckSelection = (data, selAnswer, datapoints) => {   //
         setNextQuestion(Object.assign({}, nextQuestion, {
             nextQuestion: data,
             dataAnswer: nextQuestion.dataAnswer + selAnswer, 
             qPoints: nextQuestion.qPoints + datapoints
+        })) //
+    }
+
+    const handleRadioSelection = (data, field, item, datapoints) => {   //
+        setNextQuestion(Object.assign({}, nextQuestion, {
+            nextQuestion: data,
+            [field]: item,
+            dataAnswer: item,
+            qPoints: datapoints
         })) //
     }
 
@@ -78,9 +85,9 @@ const MasterForm = props => {
                             : question.kind === 'doble texto'
                             ? <p>Seré doble texto</p>
                             : question.kind === 'opcion multiple'  
-                            ? <RadioInput answId={question._id} state={formState} next={nextQuestion} onChange={ e => handleChange(e)} selection={handleSelection} onClick={handleCheck}/>
+                            ? <RadioInput answId={question._id} next={nextQuestion} selection={handleRadioSelection} onClick={handleCheck}/>
                             : question.kind === 'checklist'  
-                            ? <CheckInput answId={question._id} state={formState} next={nextQuestion} onClick={handleCheck} selection={handleSelection}/>
+                            ? <CheckInput answId={question._id} next={nextQuestion} selection={handleCheckSelection} onClick={handleCheck}/>
                             : <div></div> 
                         }
                         </Bounce>

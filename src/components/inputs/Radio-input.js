@@ -18,7 +18,8 @@ const RadioInput = props => {
     const classes = useStyles();
     
     const [answer, setAnswer] = useState([])
-    let field = ""
+    let field = answer.length>0 ? answer[0].short_answer : '';
+    console.log(field)
     
     useEffect(() => {
         const getAnswer = () => {
@@ -32,43 +33,51 @@ const RadioInput = props => {
     return (
         <Bounce right>
             <div className={classes.root} noValidate autoComplete="off">
+            <FormControl component="fieldset">
+            <RadioGroup aria-label="position" 
+                                name={answer.length>0 ? answer[0].short_answer : ''} 
+                                value={props.next[answer.length>0 ? answer[0].short_answer : '']} 
+                                //onChange={props.onChange} 
+                                
+                                >
                 {
                     answer.map((item, i) => {
-                        field= item.short_answer;
+                        console.log(item)
                         return (
                             
-                            <FormControl key={i} component="fieldset">
-                                <RadioGroup aria-label="position" 
-                                name={item.short_answer} 
-                                value={props.state[item.short_answer]} 
-                                //onChange={props.onChange} 
-                                onClick={() => props.selection(
-                                    item.next_question,
-                                    item.long_answer,
-                                    item.points
-                                    )}
-                                >
+                            
+                                
                                     <FormControlLabel
                                         control={<Radio/>}                                      
                                         label={item.long_answer}
                                         value={item.long_answer}
                                         labelPlacement="top"
                                         color="primary"
+                                        onClick={() => props.selection(
+                                            item.next_question,
+                                            field,
+                                            item.long_answer,
+                                            item.points
+                                            )}
                                     />
-                                </RadioGroup>
-                            </FormControl>
+                                
+                            
                         )
                     })
                 }
-            
+                </RadioGroup>
+            </FormControl>
             </div>
             <FormControlLabel
                 control={
                     <Button
                         variant="contained"
                         color="secondary"
-                        disabled={!props.next['dataAnswer']}
-                        onClick={() => props.onClick(field)}
+                        disabled={!props.next[field]}
+                        onClick={() => {
+                            props.onClick(field)
+                            console.log('field es ' + field);
+                        }}
                     >
                         <Link to={`/hogar/${props.next['nextQuestion']}`}> Siguiente</Link>
                     </Button>}
