@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment} from 'react'
+import React, { useState, useEffect, Fragment, useContext } from 'react'
 import QuesCRUD from '../services/question-service';
 import {useParams} from 'react-router-dom';
 
@@ -7,9 +7,11 @@ import CheckInput from '../inputs/Check-input'
 import RadioInput from '../inputs/Radio-input'
 
 import { Bounce } from 'react-reveal';
-//import MyContext from '../../context'
+import MyContext from '../../context'
 
 const MasterForm = props => {
+
+    const { updateBranch } = useContext(MyContext);
 
     const [ formState, updateFormState ] = useState({ 
         name: '',
@@ -27,6 +29,7 @@ const MasterForm = props => {
         const { name, value } = event.target;
         updateFormState(Object.assign({}, formState, {[name]: value}))
         //setNextQuestion({})
+        //updateBranch(question.branch)  CONTEXT
       }
 
     const handleCheck = (data) => {  
@@ -73,7 +76,7 @@ const MasterForm = props => {
     }, [id])
 
     return (
-        //<MyContext.Provider value={{status: formState.status, updateContext: updateFormState}}>
+        //<MyContext.Provider value={{branch: question.branch}}>
             <Fragment>
                 <h3>Popcorn</h3>
                         <Bounce right>

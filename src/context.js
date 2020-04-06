@@ -2,8 +2,8 @@ import { createContext } from 'react';
 
 const MyContext = createContext({
     user: null,
-    status_input: "false",
-    updateStatus: () => {}
+    branch: "",
+    updateBranch: () => {}
 });
 
 export default MyContext;

@@ -33,22 +33,21 @@ const RadioInput = props => {
     return (
         <Bounce right>
             <div className={classes.root} noValidate autoComplete="off">
-            <FormControl component="fieldset">
-            <RadioGroup aria-label="position" 
-                                name={answer.length>0 ? answer[0].short_answer : ''} 
-                                value={props.next[answer.length>0 ? answer[0].short_answer : '']} 
-                                //onChange={props.onChange} 
-                                
-                                >
-                {
-                    answer.map((item, i) => {
-                        console.log(item)
-                        return (
-                            
-                            
-                                
+                <FormControl  component="fieldset">
+                    <RadioGroup aria-label="position"
+                    
+                        name={answer.length > 0 ? answer[0].short_answer : ''}
+                        checked={props.next[answer.length > 0 ? answer[0].short_answer : '']}
+                    //onChange={props.onChange} 
+                    >
+                        {
+                            answer.map((item, i) => {
+                                console.log(item)
+                                return (
                                     <FormControlLabel
-                                        control={<Radio/>}                                      
+                                    
+                                        key={i}
+                                        control={<Radio />}
                                         label={item.long_answer}
                                         value={item.long_answer}
                                         labelPlacement="top"
@@ -58,15 +57,16 @@ const RadioInput = props => {
                                             field,
                                             item.long_answer,
                                             item.points
-                                            )}
+                                        )}
                                     />
-                                
-                            
-                        )
-                    })
-                }
-                </RadioGroup>
-            </FormControl>
+
+
+
+                                )
+                            })
+                        }
+                    </RadioGroup>
+                </FormControl>
             </div>
             <FormControlLabel
                 control={
