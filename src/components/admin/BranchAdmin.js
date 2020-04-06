@@ -1,8 +1,19 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, Link} from 'react';
 import BranchCRUD from '../admin-services/branch-service'
+import { makeStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
 
 const BranchAdmin = props => {
+  const classes = useStyles();
 
   const branchService = new BranchCRUD();
 
@@ -32,12 +43,14 @@ const BranchAdmin = props => {
   
   const [ branches, setBranch ] = useState([])
 
+  
   const getAllBranch = () => {
     const branchService = new BranchCRUD();
     branchService.getAll().then(res=>setBranch(res));
 }
 
 useEffect(() => {
+  
     getAllBranch()
 }, [])
 
@@ -70,9 +83,11 @@ useEffect(() => {
         <h3>Ramos Disponibles</h3>
         
         {
-          branches.map(branch => {
+          branches.map((item,i) => {
             return (
-            <p>{branch.name}</p>
+              <div key={i} className={classes.root} noValidate autoComplete="off">
+                <Button variant="contained" color="secondary"><Link to={`/questionadmin/${item.name}`}> {item.name}</Link></Button>
+              </div>
             )
           })
         }
