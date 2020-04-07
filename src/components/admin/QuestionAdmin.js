@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import QuestionCRUD from '../admin-services/question-service'
+import { MenuAdmin } from './MenuAdmin';
 
 
 const QuestionAdmin = props => {
@@ -34,6 +35,7 @@ useEffect(() => {
 
     return (
       <div>
+        <MenuAdmin/>
         <h2>Admin Preguntas</h2>
         <h3>Pregunta Nueva</h3>
         <form onSubmit={handleFormSubmit}>
@@ -55,7 +57,7 @@ useEffect(() => {
         {
           questions.map((ques,i) => {
             return (
-            <p>{i}.- {ques.question}</p>
+            <p>{i+1}.- {ques.question}</p>
             )
           })
         }

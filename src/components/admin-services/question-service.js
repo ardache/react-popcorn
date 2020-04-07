@@ -15,7 +15,7 @@ class QuestionCRUD {
   }
 
   getByBranch = branch => {
-    return this.service.get(`/questions/${branch}`)
+    return this.service.get(`/questionsbybranch/${branch}`)
     .then(response => response.data)
   }
 
