@@ -14,7 +14,6 @@ const [anchorEl, setAnchorEl] = React.useState(null);
 
 const handleClick = (event) => {
   setAnchorEl(event.currentTarget);
-
 };
 
 const handleClose = () => {
@@ -34,11 +33,15 @@ const handleClose = () => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={<Link to={'/questionadmin/:branch'}>Preguntas</Link>}>Vista Preliminar</MenuItem>
-          <MenuItem onClick={handleClose}>Ramos</MenuItem>
-          <MenuItem onClick={handleClose}>Preguntas</MenuItem>
-          <MenuItem onClick={handleClose}>Respuestas</MenuItem>
-          <MenuItem onClick={handleClose}>Precios</MenuItem>
+            <Link to= '/' style={{ textDecoration: 'none' }} >
+                <MenuItem onClick={handleClose} tab='1'>Vista Preliminar</MenuItem>
+            </Link>
+            <Link to= '/branchadmin' style={{ textDecoration: 'none' }}>
+          <MenuItem onClick={handleClose} tab='2'>Ramos</MenuItem>
+            </Link>
+            <Link to= '/priceadmin' style={{ textDecoration: 'none' }}>
+          <MenuItem onClick={handleClose} tab='5'>Precios</MenuItem>
+            </Link>
         </Menu>
       </div>
     )
