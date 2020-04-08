@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import BranchCRUD from '../admin-services/branch-service'
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+import { TextField, Button, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { Link } from 'react-router-dom'
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import { MenuAdmin } from './MenuAdmin';
 
 
@@ -18,7 +17,7 @@ const useStyles = makeStyles((theme)=> ({
     '& > *': {
       margin: theme.spacing(2),
       width: theme.spacing(35),
-      height: theme.spacing(25),
+      height: theme.spacing(40),
     },
   },
   card: {
@@ -34,6 +33,10 @@ const useStyles = makeStyles((theme)=> ({
   },
   pos: {
     marginBottom: 10,
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 150
   },
 }));
 
@@ -52,12 +55,13 @@ const BranchAdmin = props => {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     branchService.createBranch(formState)
-        updateFormState({
-          name: '',
-          logo: '',
-          available: null
-        })
-    
+      .then(() => getAllBranch());
+    updateFormState({
+      name: '',
+      logo: '',
+      available: null
+    })
+
   }
 
   const handleChange = (event) => {
@@ -76,41 +80,72 @@ useEffect(() => {
 }, [])
 
   return (
-    <div>
+    <Fragment>
       <MenuAdmin/>
 
       <h2>Admin Ramos</h2>
       <div className={classes.root}>
 
-        <Card>
+        <Card elevation={5}>
           <CardContent>
             <Typography variant="h5" component="h2">
               Ramo Nuevo
                   </Typography>
 
-            <Typography variant="body2" component="p">
+            <Typography variant="body2" component="span">
+            
               <form onSubmit={handleFormSubmit}>
-                <label>Nombre del Ramo:</label>
-                <input type="text" name="name" value={formState.name} onChange={e => handleChange(e)} />
+                <TextField type="text" name="name" value={formState.name} onChange={e => handleChange(e)} variant="outlined" color="secondary" label="Nombre del Ramo"/>
                 <br></br>
-                <label>Logo:</label>
-                <select name="logo" value={formState.logo} onChange={e => handleChange(e)}>
-                  <option value=""></option>
-                  <option value="FaHome">Casa</option>
-                  <option value="FaBiohazard">Pandemia</option>
-                  <option value="FaBicycle">Bicicleta</option>
-                  <option value="FaDog">Mascota</option>
-                </select>
-                <br></br>
-                <label>Disponible:</label>
-                <select name="available" value={formState.available} onChange={e => handleChange(e)}>
-                  <option value=""></option>
-                  <option value="true">Si</option>
-                  <option value="false">No</option>
-                </select>
-                <br></br>
-                <br></br>
-                <input type="submit" value="Submit" />
+                
+                <FormControl variant="outlined" className={classes.formControl}>
+                  <InputLabel id="outlined-label">Logo</InputLabel>
+                  <Select
+                    color="secondary"
+                    labelId="outlined-label"
+                    id="select-outlined"
+                    name="logo"
+                    value={formState.logo}
+                    onChange={e => handleChange(e)}
+                    label="logo"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={'FaHome'}>Casa</MenuItem>
+                    <MenuItem value={'FaBiohazard'}>Pandemia</MenuItem>
+                    <MenuItem value={'FaBicycle'}>Bicicleta</MenuItem>
+                    <MenuItem value={'FaDog'}>Mascota</MenuItem>
+                  </Select>
+                </FormControl>
+
+ 
+                <FormControl variant="outlined" className={classes.formControl}>
+                  <InputLabel id="outlined-label">Disponible</InputLabel>
+                  <Select
+                    color="secondary"
+                    labelId="outlined-label"
+                    id="select-outlined"
+                    name="available"
+                    value={formState.available}
+                    onChange={e => handleChange(e)}
+                    label="available"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={'true'}>Si</MenuItem>
+                    <MenuItem value={'false'}>No</MenuItem>
+                  </Select>
+                </FormControl>
+
+                <Button size="small"
+                  variant="contained"
+                  color="secondary"
+                  type="submit"
+                  value="Submit">Guardar
+                    </Button>
+
               </form>
 
             </Typography>
@@ -128,8 +163,8 @@ useEffect(() => {
           branches.map((item, i) => {
             return (
 
-              <Paper elevation={5}>
-                <Card>
+  
+                <Card key={i} elevation={5}>
                   <CardContent>
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
                       Ramo
@@ -163,17 +198,17 @@ useEffect(() => {
                       size="small"
                       variant="contained"
                       color="secondary">
-                      <Link to={`/questionadmin/${item.name}`}>Borrar</Link>
+                      <Link to={`/branchadmin/${item._id}`}>Borrar</Link>
                     </Button>
                   </CardActions>
                 </Card>
-              </Paper>
+
 
             )
           })
         }
       </div>
-    </div>
+    </Fragment>
   )
   
 }

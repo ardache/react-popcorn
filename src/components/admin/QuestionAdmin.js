@@ -1,13 +1,13 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, Fragment} from 'react';
 import QuestionCRUD from '../admin-services/question-service'
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+import { TextField, Button, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { Link, useParams } from 'react-router-dom'
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
+//import Paper from '@material-ui/core/Paper';
 import { MenuAdmin } from './MenuAdmin';
 
 const useStyles = makeStyles((theme)=> ({
@@ -15,24 +15,25 @@ const useStyles = makeStyles((theme)=> ({
     display: 'flex',
     flexWrap: 'wrap',
     '& > *': {
-      margin: theme.spacing(2),
-      width: theme.spacing(35),
-      height: theme.spacing(25),
+      margin: theme.spacing(1),
+      width: theme.spacing(45),
+      height: theme.spacing(35),
     },
   },
-  card: {
-    minWidth: 275,
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
+
   title: {
     fontSize: 14,
   },
   pos: {
-    marginBottom: 10,
+    marginBottom: 12,
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 200
+  },
+  text: {
+    margin: theme.spacing(1),
+    minWidth: 300
   },
 }));
 
@@ -41,11 +42,20 @@ const QuestionAdmin = props => {
   let { branch } = useParams()
   
   const questionService = new QuestionCRUD();
-  const [formState, updateFormState] = useState({})
+  const [formState, updateFormState] = useState({
+        question:'',
+        kind:'',
+        branch:branch
+  })
   const handleFormSubmit = (event) => {
     event.preventDefault();
     questionService.createQuestion(formState)
-        updateFormState({})
+      .then(() => getAllQuestions());
+    updateFormState({
+      question: '',
+      kind: '',
+      branch: branch
+    })
   }
 
   const handleChange = (event) => {
@@ -55,7 +65,6 @@ const QuestionAdmin = props => {
   
   const [ questions, setQuestion ] = useState([])
   const getAllQuestions = () => {
-    
     const questionService = new QuestionCRUD();
     questionService.getByBranch(branch).then(res=>setQuestion(res));
 }
@@ -65,7 +74,7 @@ useEffect(() => {
 }, [])
 
   return (
-    <div>
+    <Fragment>
       <MenuAdmin />
       <h2>Admin Preguntas</h2>
       <div className={classes.root}>
@@ -73,21 +82,41 @@ useEffect(() => {
           <CardContent>
             <Typography variant="h5" component="h2">
               Pregunta Nueva
+              <br />
             </Typography>
 
-            <Typography variant="body2" component="p">
+            <Typography variant="body2" component="span">
               <form onSubmit={handleFormSubmit}>
-                <label>Pregunta:</label>
-                <input type="text" name="question" value={formState.question} onChange={e => handleChange(e)} />
-                <label>Tipo:</label>
-                <select name="type" value={formState.type} onChange={e => handleChange(e)}>
-                  <option value=""></option>
-                  <option value="texto">Texto</option>
-                  <option value="opcion multiple">Opción Multiple</option>
-                  <option value="checklist">Check Box</option>
-                </select>
+                <TextField className={classes.text} id="outlined-basic" value={formState.question} name="question" label="Pregunta" variant="outlined" color="secondary" onChange={e => handleChange(e)} />
 
-                <input type="submit" value="Submit" />
+                <br />
+                <FormControl variant="outlined" className={classes.formControl}>
+                  <InputLabel id="outlined-label">Tipo de respuestas</InputLabel>
+                  <Select
+                    color="secondary"
+                    labelId="outlined-label"
+                    id="select-outlined"
+                    name="kind"
+                    value={formState.type}
+                    onChange={e => handleChange(e)}
+                    label="kind"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={'texto'}>Cuadro de texto</MenuItem>
+                    <MenuItem value={'opcion multiple'}>Opcion multiple</MenuItem>
+                    <MenuItem value={'checklist'}>Check list</MenuItem>
+                  </Select>
+                </FormControl>
+                <br />
+
+                <Button size="small"
+                  variant="contained"
+                  color="secondary"
+                  type="submit"
+                  value="Submit">Guardar
+                    </Button>
               </form>
             </Typography>
           </CardContent>
@@ -99,8 +128,8 @@ useEffect(() => {
         {
           questions.map((ques, i) => {
             return (
-              <Paper elevation={5}>
-                <Card>
+              //<Paper elevation={5}>
+                <Card key={i}>
                   <CardContent>
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
                       Pregunta No. {i + 1}
@@ -114,7 +143,7 @@ useEffect(() => {
                       size="small"
                       variant="contained"
                       color="secondary">
-                      <Link to={`/questionadmin/${ques.name}`}>Respuestas</Link>
+                      <Link to={`/answeradmin/${ques.name}`}>Respuestas</Link>
                     </Button>
                     <Button
                       size="small"
@@ -128,18 +157,17 @@ useEffect(() => {
                       color="secondary">
                       <Link to={`/questionadmin/${ques.name}`}>Borrar</Link>
                     </Button>
-
                   </CardActions>
 
 
                 </Card>
-              </Paper>
+             // </Paper>
             )
           })
         }
 
       </div>
-    </div>
+    </Fragment>
     )
   
 }

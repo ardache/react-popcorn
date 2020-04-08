@@ -24,6 +24,7 @@ function App() {
                 <Route exact path='/geek/' render={() => <MasterForm branch={"geek"} />}/>
                 <Route exact path='/branchadmin/' render={() => <BranchAdmin />}/>
                 <Route exact path='/questionadmin/:branch' render={() => <QuestionsAdmin branch={'Hogar'}/>}/>
+                <Route exact path='/branchadmin/:id' render={() => <BranchAdmin />}/>
                 </Fragment>
             {/* <ProtectedRoute path='/projects/:id' component={ProjectDetails} />
             <ProtectedRoute path='/projects' component={ProjectList} /> */}
