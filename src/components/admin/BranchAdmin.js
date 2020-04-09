@@ -64,6 +64,11 @@ const BranchAdmin = props => {
 
   }
 
+  const deleteBranch = (id) => {
+    const branchService = new BranchCRUD();
+    branchService.delete(id).then(()=>getAllBranch());
+  }
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     updateFormState(Object.assign({}, formState, { [name]: value }))
@@ -197,8 +202,8 @@ useEffect(() => {
                     <Button
                       size="small"
                       variant="contained"
-                      color="secondary">
-                      <Link to={`/branchadmin/${item._id}`}>Borrar</Link>
+                      color="secondary"
+                      onClick={() => deleteBranch(item._id) }>Borrar
                     </Button>
                   </CardActions>
                 </Card>
