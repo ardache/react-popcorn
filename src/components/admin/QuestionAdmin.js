@@ -58,6 +58,12 @@ const QuestionAdmin = props => {
     })
   }
 
+  const deleteQuestion = (id) => {
+    const questionService = new QuestionCRUD();
+    questionService.delete(id).then(()=>getAllQuestions());
+  }
+
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     updateFormState(Object.assign({}, formState, { [name]: value }))
@@ -154,8 +160,8 @@ useEffect(() => {
                     <Button
                       size="small"
                       variant="contained"
-                      color="secondary">
-                      <Link to={`/questionadmin/${ques.name}`}>Borrar</Link>
+                      color="secondary"
+                      onClick={() => deleteQuestion(ques._id) }>Borrar
                     </Button>
                   </CardActions>
 

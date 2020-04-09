@@ -4,7 +4,8 @@ class QuestionCRUD {
   constructor() {
     let service = axios.create({
       baseURL: process.env.REACT_APP_API_URL || "http://localhost:5000",
-      withCredentials: true
+      withCredentials: true,
+      useFindAndModify: false //deprecation
     });
     this.service = service;
   }
@@ -21,6 +22,11 @@ class QuestionCRUD {
 
 createQuestion = questionBody => {
     return this.service.post('/questions', questionBody)
+    .then(response => response.data)
+  }
+
+  delete = (id) => {
+    return this.service.delete(`/questions/${id}`)
     .then(response => response.data)
   }
 }
