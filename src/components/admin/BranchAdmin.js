@@ -95,7 +95,7 @@ useEffect(() => {
           <CardContent>
             <Typography variant="h5" component="h2">
               Ramo Nuevo
-                  </Typography>
+            </Typography>
 
             <Typography variant="body2" component="span">
             
@@ -191,7 +191,7 @@ useEffect(() => {
                       size="small"
                       variant="contained"
                       color="secondary">
-                      <Link to={`/questionadmin/${item.name}`}>Preguntas</Link>
+                      <Link to={`/questionadmin/${item.name}/${item._id}`}>Preguntas</Link>
                     </Button>
                     <Button
                       size="small"

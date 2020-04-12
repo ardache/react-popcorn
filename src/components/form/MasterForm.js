@@ -76,7 +76,7 @@ const MasterForm = props => {
     }, [id])
 
     return (
-        //<MyContext.Provider value={{branch: question.branch}}>
+        <MyContext.Provider value={{branch: question.branch}}>
             <Fragment>
                 <h3>Popcorn</h3>
                         <Bounce right>
@@ -95,7 +95,7 @@ const MasterForm = props => {
                         }
                         </Bounce>
             </Fragment>
-        //</MyContext.Provider>
+        </MyContext.Provider>
      )
 }
 

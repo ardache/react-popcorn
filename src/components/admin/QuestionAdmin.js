@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment} from 'react';
 import QuestionCRUD from '../admin-services/question-service'
+import BranchCRUD from '../admin-services/branch-service'
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Button, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { Link, useParams } from 'react-router-dom'
@@ -39,13 +40,14 @@ const useStyles = makeStyles((theme)=> ({
 
 const QuestionAdmin = props => {
   const classes = useStyles();
-  let { branch } = useParams()
+  let { branch, _id } = useParams()
   
   const questionService = new QuestionCRUD();
   const [formState, updateFormState] = useState({
         question:'',
         kind:'',
-        branch:branch
+        branch:branch,
+        idBranch: _id
   })
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -54,7 +56,8 @@ const QuestionAdmin = props => {
     updateFormState({
       question: '',
       kind: '',
-      branch: branch
+      branch: branch,
+      idBranch: ''
     })
   }
 
@@ -62,6 +65,12 @@ const QuestionAdmin = props => {
     const questionService = new QuestionCRUD();
     questionService.delete(id).then(()=>getAllQuestions());
   }
+
+  const initQuestion = (id) => {
+    const branchService = new BranchCRUD();
+    branchService.edit(id, nextQuestionId).then(()=>getAllQuestions());
+  }
+  
 
 
   const handleChange = (event) => {
@@ -157,6 +166,14 @@ useEffect(() => {
                       color="secondary">
                       <Link to={`/questionadmin/${ques.name}`}>Editar</Link>
                     </Button>
+
+                    <Button
+                      size="small"
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => initQuestion(formState.idBranch, ques._id) }>Inicio
+                    </Button>
+
                     <Button
                       size="small"
                       variant="contained"
