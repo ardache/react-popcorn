@@ -66,7 +66,7 @@ const QuestionAdmin = props => {
     questionService.delete(id).then(()=>getAllQuestions());
   }
 
-  const initQuestion = (id) => {
+  const initQuestion = (id, nextQuestionId) => {
     const branchService = new BranchCRUD();
     branchService.edit(id, nextQuestionId).then(()=>getAllQuestions());
   }

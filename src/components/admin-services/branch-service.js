@@ -15,13 +15,13 @@ class BranchCRUD {
     .then(response => response.data.branches)
   }
 
-delete = (id, quesId) => {
-  return this.service.delete(`/branch/${id,quesId}`)
+delete = (id) => {
+  return this.service.delete(`/branch/${id}`)
   .then(response => response.data.branches)
 }
 
-edit = (id) => {
-  return this.service.edit(`/branch/${id}`)
+edit = (id, nextQuestionId) => {
+  return this.service.post(`/branch/${id}/${nextQuestionId}`)
   .then(response => response.data.branches)
 }
 
