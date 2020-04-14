@@ -38,8 +38,8 @@ const SingleTextInput = props => {
                 return (
 
                   <div key={i} className={classes.root} noValidate autoComplete="off">
-                    <TextField id="outlined-basic" value={props.state[item.short_answer]} name={item.short_answer} label={item.long_answer} variant="outlined" color="secondary" onChange={props.onChange} /><br></br>
-                    <Button variant="contained" color="secondary" disabled={!props.state[item.short_answer]}><Link to={`/hogar/${item.next_question}`}> Siguiente</Link></Button>
+                    <TextField id="outlined-basic" value={props.state[item.long_answer]} name={item.long_answer} label={item.long_answer} variant="outlined" color="secondary" onChange={props.onChange} /><br></br>
+                    <Button variant="contained" color="secondary" disabled={!props.state[item.long_answer]}><Link to={`/${props.branch}/${item.next_question}`}> Siguiente</Link></Button>
                   </div>
                 )
               })

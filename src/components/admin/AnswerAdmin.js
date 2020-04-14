@@ -1,9 +1,9 @@
 import React, { useState, useEffect, Fragment} from 'react';
-import QuestionCRUD from '../admin-services/question-service'
-import BranchCRUD from '../admin-services/branch-service'
+//import QuestionCRUD from '../admin-services/question-service'
+import AnswerCRUD from '../admin-services/answer-service'
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Button, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme)=> ({
     '& > *': {
       margin: theme.spacing(1),
       width: theme.spacing(45),
-      height: theme.spacing(35),
+      height: theme.spacing(40),
     },
   },
 
@@ -38,81 +38,70 @@ const useStyles = makeStyles((theme)=> ({
   },
 }));
 
-const QuestionAdmin = props => {
+const AnswerAdmin = props => {
   const classes = useStyles();
-  let { branch, _id } = useParams()
+  let { _id } = useParams()
   
-  const questionService = new QuestionCRUD();
+  const answerService = new AnswerCRUD();
   const [formState, updateFormState] = useState({
-        question:'',
-        kind:'',
-        branch:branch,
-        idBranch: _id
+  parent: _id,
   })
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    questionService.createQuestion(formState)
-      .then(() => getAllQuestions());
+    answerService.createAnswer(formState)
+      .then(() => getAllAnswers());
     updateFormState({
-      question: '',
-      kind: '',
-      branch: branch,
-      idBranch: ''
+    parent: _id,
     })
   }
 
-  const deleteQuestion = (id) => {
-    const questionService = new QuestionCRUD();
-    questionService.delete(id).then(()=>getAllQuestions());
+  const deleteAnswer = (id) => {
+    const answerService = new AnswerCRUD();
+    answerService.delete(id).then(()=>getAllAnswers());
   }
-
-  const initQuestion = (id, nextQuestionId) => {
-    const branchService = new BranchCRUD();
-    branchService.edit(id, nextQuestionId).then(()=>getAllQuestions());
-  }
-  
-
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     updateFormState(Object.assign({}, formState, { [name]: value }))
   }
   
-  const [ questions, setQuestion ] = useState([])
-  const getAllQuestions = () => {
-    const questionService = new QuestionCRUD();
-    questionService.getByBranch(branch).then(res=>setQuestion(res));
+  const [ answers, setAnswer ] = useState([])
+  const getAllAnswers = () => {
+    const answerService = new AnswerCRUD();
+    answerService.getById(formState.parent).then(res=>setAnswer(res));
 }
 
 useEffect(() => {
-    getAllQuestions()
+    getAllAnswers()
 }, [])
 
   return (
     <Fragment>
       <MenuAdmin />
-      <h2>Admin Preguntas</h2>
+      <h2>Admin Respuestas</h2>
       <div className={classes.root}>
         <Card>
           <CardContent>
             <Typography variant="h5" component="h2">
-              Pregunta Nueva
+              Respuesta Nueva
               <br />
             </Typography>
 
             <Typography variant="body2" component="span">
               <form onSubmit={handleFormSubmit}>
-                <TextField className={classes.text} id="outlined-basic" value={formState.question} name="question" label="Pregunta" variant="outlined" color="secondary" onChange={e => handleChange(e)} />
-
+                <TextField className={classes.text} id="outlined-basic" value={formState.long_answer} name="long_answer" label="Respuesta" variant="outlined" color="secondary" onChange={e => handleChange(e)} />
+                <br />
+                <TextField className={classes.text} id="outlined-basic" value={formState.points} name="points" label="Puntos" variant="outlined" color="secondary" onChange={e => handleChange(e)} />
+                
                 <br />
                 <FormControl variant="outlined" className={classes.formControl}>
-                  <InputLabel id="outlined-label">Tipo de respuestas</InputLabel>
+                  <InputLabel id="outlined-label">Siguiente Pregunta</InputLabel>
                   <Select
                     color="secondary"
                     labelId="outlined-label"
                     id="select-outlined"
                     name="kind"
-                    value={formState.type}
+                    value={formState.next_question}
                     onChange={e => handleChange(e)}
                     label="kind"
                   >
@@ -138,50 +127,52 @@ useEffect(() => {
         </Card>
       </div>
 
-      <h3>Preguntas</h3>
+      <h3>Respuestas</h3>
       <div className={classes.root}>
         {
-          questions.map((ques, i) => {
+          answers.map((answ, i) => {
             return (
               //<Paper elevation={5}>
                 <Card key={i}>
                   <CardContent>
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
-                      Pregunta No. {i + 1}
+                      Respuesta No. {i + 1}
                     </Typography>
                     <Typography variant="h5" component="h2">
-                      {ques.question}
+                      {answ.long_answer}
                     </Typography>
                     <Typography className={classes.title}>
-                      {ques.kind}
+                      Puntos: {answ.points}
                     </Typography>
+
+                    <FormControl variant="outlined" className={classes.formControl}>
+                  <InputLabel id="outlined-label">Siguiente Pregunta</InputLabel>
+                  <Select
+                    color="secondary"
+                    labelId="outlined-label"
+                    id="select-outlined"
+                    name="kind"
+                    value={formState.next_question}
+                    onChange={e => handleChange(e)}
+                    label="kind"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={'texto'}>Cuadro de texto</MenuItem>
+                    <MenuItem value={'opcion multiple'}>Opcion multiple</MenuItem>
+                    <MenuItem value={'checklist'}>Check list</MenuItem>
+                  </Select>
+                </FormControl>
+
                   </CardContent>
                   <CardActions>
-                    <Button
-                      size="small"
-                      variant="contained"
-                      color="secondary">
-                      <Link to={`/answer/${ques._id}`}>Respuestas</Link>
-                    </Button>
-                    <Button
-                      size="small"
-                      variant="contained"
-                      color="secondary">
-                      <Link to={`/questionadmin/${ques.name}`}>Editar</Link>
-                    </Button>
-
+                    
                     <Button
                       size="small"
                       variant="contained"
                       color="secondary"
-                      onClick={() => initQuestion(formState.idBranch, ques._id) }>Inicio
-                    </Button>
-
-                    <Button
-                      size="small"
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => deleteQuestion(ques._id) }>Borrar
+                      onClick={() => deleteAnswer(answ._id) }>Borrar
                     </Button>
                   </CardActions>
 
@@ -197,4 +188,4 @@ useEffect(() => {
     )
   
 }
-export default QuestionAdmin
+export default AnswerAdmin

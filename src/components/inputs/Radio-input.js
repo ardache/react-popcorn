@@ -79,7 +79,7 @@ const RadioInput = props => {
                             console.log('field es ' + field);
                         }}
                     >
-                        <Link to={`/hogar/${props.next['nextQuestion']}`}> Siguiente</Link>
+                        <Link to={`/${props.branch}/${props.next['nextQuestion']}`}> Siguiente</Link>
                     </Button>}
             />
         </Bounce>

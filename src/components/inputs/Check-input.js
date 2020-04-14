@@ -71,7 +71,7 @@ const CheckInput = props => {
                         disabled={!props.next['dataAnswer']}
                         onClick={() => props.onClick(field)}
                     >
-                            <Link to={`/hogar/${props.next['nextQuestion']}`}> Siguiente</Link>
+                            <Link to={`/${props.branch}/${props.next['nextQuestion']}`}> Siguiente</Link>
                     </Button>
                 }
             />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment, useContext } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import QuesCRUD from '../services/question-service';
 import {useParams} from 'react-router-dom';
 
@@ -11,7 +11,7 @@ import MyContext from '../../context'
 
 const MasterForm = props => {
 
-    const { updateBranch } = useContext(MyContext);
+    //const { updateBranch } = useContext(MyContext);
 
     const [ formState, updateFormState ] = useState({ 
         name: '',
@@ -84,7 +84,7 @@ const MasterForm = props => {
                                 <h1>{question.question}</h1>
                             </header>
                         {question.kind === 'texto' 
-                            ? <SingleTextInput answId={question._id} state={formState} onChange={ e => handleChange(e)}/>
+                            ? <SingleTextInput answId={question._id} state={formState} branch={props.branch} onChange={ e => handleChange(e)}/>
                             : question.kind === 'doble texto'
                             ? <p>Seré doble texto</p>
                             : question.kind === 'opcion multiple'  
