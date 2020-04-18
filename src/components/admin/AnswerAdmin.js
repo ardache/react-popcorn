@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment} from 'react';
-//import QuestionCRUD from '../admin-services/question-service'
+import QuestionCRUD from '../admin-services/question-service'
 import AnswerCRUD from '../admin-services/answer-service'
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Button, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
@@ -69,10 +69,27 @@ const AnswerAdmin = props => {
   const getAllAnswers = () => {
     const answerService = new AnswerCRUD();
     answerService.getById(formState.parent).then(res=>setAnswer(res));
-}
+  }
+
+  const [ questions, setQuestions ] = useState([])
+    const getQuestionByBranch = () => {
+        const questionService = new QuestionCRUD();
+        questionService.getByBranch(props.branch).then(res=>setQuestions(res))
+    }
+
+    const [ update, setUpdate ] = useState({
+      idAnswer:'',
+      idNextQuest:''
+    })
+    const updateNextQuestion = (id, nextQuestionId) => {
+        const answerService = new AnswerCRUD();
+        answerService.edit(id, nextQuestionId).then(()=>getAllAnswers());
+      }
+  
 
 useEffect(() => {
     getAllAnswers()
+    getQuestionByBranch()
 }, [])
 
   return (
@@ -151,17 +168,21 @@ useEffect(() => {
                     color="secondary"
                     labelId="outlined-label"
                     id="select-outlined"
-                    name="kind"
-                    value={formState.next_question}
+                    name="nextQuestion"
+                    value={update.idNextQuest}
                     onChange={e => handleChange(e)}
                     label="kind"
                   >
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value={'texto'}>Cuadro de texto</MenuItem>
-                    <MenuItem value={'opcion multiple'}>Opcion multiple</MenuItem>
-                    <MenuItem value={'checklist'}>Check list</MenuItem>
+                                {
+                                    questions.map(quest => {
+                                        return (
+                                                <MenuItem name={answ._id} value={quest._id}>{quest.question}</MenuItem>                                           
+                                        )
+                                    })
+                                }
                   </Select>
                 </FormControl>
 
@@ -172,8 +193,16 @@ useEffect(() => {
                       size="small"
                       variant="contained"
                       color="secondary"
-                      onClick={() => deleteAnswer(answ._id) }>Borrar
+                      onClick={ () => deleteAnswer(answ._id) }>Borrar
                     </Button>
+
+                    <Button
+                      size="small"
+                      variant="contained"
+                      color="secondary"
+                      onClick={ () => updateNextQuestion( update.idNextQuest ) }>Actualizar
+                    </Button>
+
                   </CardActions>
 
 
