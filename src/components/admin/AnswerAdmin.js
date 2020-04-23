@@ -52,6 +52,8 @@ const AnswerAdmin = props => {
       .then(() => getAllAnswers());
     updateFormState({
     parent: _id,
+    nextQuestion:'',
+
     })
   }
 
@@ -77,10 +79,7 @@ const AnswerAdmin = props => {
         questionService.getByBranch(props.branch).then(res=>setQuestions(res))
     }
 
-    const [ update, setUpdate ] = useState({
-      idAnswer:'',
-      idNextQuest:''
-    })
+    
     const updateNextQuestion = (id, nextQuestionId) => {
         const answerService = new AnswerCRUD();
         answerService.edit(id, nextQuestionId).then(()=>getAllAnswers());
@@ -169,7 +168,7 @@ useEffect(() => {
                     labelId="outlined-label"
                     id="select-outlined"
                     name="nextQuestion"
-                    value={update.idNextQuest}
+                    value={formState.nextQuestion}
                     onChange={e => handleChange(e)}
                     label="kind"
                   >
@@ -199,8 +198,7 @@ useEffect(() => {
                     <Button
                       size="small"
                       variant="contained"
-                      color="secondary"
-                      onClick={ () => updateNextQuestion( update.idNextQuest ) }>Actualizar
+                      color="secondary">Actualizar
                     </Button>
 
                   </CardActions>

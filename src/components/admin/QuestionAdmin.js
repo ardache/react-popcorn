@@ -153,7 +153,7 @@ useEffect(() => {
                       {ques.question}
                     </Typography>
                     <Typography className={classes.title}>
-                      {ques.kind}
+                      {ques.kind} {ques._id}
                     </Typography>
                   </CardContent>
                   <CardActions>

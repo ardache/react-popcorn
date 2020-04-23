@@ -28,6 +28,8 @@ function App() {
                 <Route exact path='/branchadmin/' render={() => <BranchAdmin />}/>
                 <Route exact path='/questionadmin/:branch/:_id' render={() => <QuestionsAdmin />}/>
                 <Route exact path='/answer/:_id' render={() => <AnswerAdmin branch={ "Electronica" } />}/>
+                <Route exact path='/GMm/:id' render={() => <MasterForm branch={"GMm"} />}/>
+                <Route exact path='/Cybercrimen/:id' render={() => <MasterForm branch={"Cybercrimen"} />}/>
                 <Route exact path='/branchadmin/:id' render={() => <BranchAdmin />}/>
                 </Fragment>
             {/* <ProtectedRoute path='/projects/:id' component={ProjectDetails} />
