@@ -59,7 +59,7 @@ const BranchAdmin = props => {
     updateFormState({
       name: '',
       logo: '',
-      available: null
+      available: false
     })
 
   }
