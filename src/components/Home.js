@@ -26,7 +26,7 @@ const Home = props => {
             
             <header className="App-header">
             <img src={cursor} className="App-logo" width= "50px" height="50px" alt="logo" />
-            <h1>Olvida todo lo que sabes <br></br>de <u>seguros</u> y protegete hoy.</h1>
+            <h1>Olvida todo lo que sabes <br></br>de <u>seguros</u> y protégete hoy.</h1>
             </header>
             <div>
                 {
